@@ -1,5 +1,36 @@
+body {
+    background-color: whitesmoke;
+}
+
 h1 {
-    color: rgb(99, 3, 3);
+    text-align: right;
+    font-size: small;
+    font-family: "Sofia", sans-serif;
+    color: maroon;
+
+}
+
+h3 {
+    text-align: right;
+    font-size: large;
+    font-family: "Jacques Francois Shadow", sans-serif;
+    color: maroon;
+    padding: 25px 25px 25px 25px;
+}
+
+a {
+    padding: 20px 20px 20px 20px;
+    font-family: cursive, sans-serif;
+    color: maroon;
+    font-size: medium;
+}
+
+a:link {
+    color: tan;
+}
+
+a:visited {
+    color: tan;
 }
 
 .blue_overline_text { /* This is a comment! */
@@ -7,6 +38,6 @@ h1 {
     text-decoration: overline;
     }
     #red_underline_text {
-    color: red;
+    color:red;
     text-decoration: underline;
 }
