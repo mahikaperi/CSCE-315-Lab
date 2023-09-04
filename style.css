@@ -4,7 +4,6 @@ body {
     background-image: url('12man.jpg');
     background-size: 340px 180px;
     background-repeat: no-repeat;
-    background-position: 0px 0px 0px 20px;
 }
 
 h1 {/*intro*/
@@ -113,14 +112,15 @@ a:active {
 }
 
 button {
-    margin-left: 20px;
+    margin-left: 30px;
 }
 
 h7 {
     font-size: 20px;
     font-family: "Poiret One", sans-serif;
     font-weight: 30px;
-    margin-left: 30px;
+    margin-left: 40px;
+    margin-right: 100px;
     margin-top: 0px;
     
 }
