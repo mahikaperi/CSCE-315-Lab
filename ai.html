@@ -37,6 +37,10 @@
             color: black; /* Selected answer text color */
             font-weight: bold; /* Make selected answer bold */
         }
+        .correct {
+            color: green; /* Correct answer text color */
+            font-weight: bold; /* Make correct answer bold */
+        }
         .result {
             font-weight: bold;
             font-size: 20px;
@@ -68,23 +72,27 @@
         <textarea readonly>
 Add room in the webpage (on the top right) with a textbox containing the prompt I provided you to create this page (this prompt included) to display with the quiz. Bold the border and caption it "ChatGPT Prompt".
 
-
 create and write html code for a webpage that displays an interactive quiz on facts about me
-
+            
 edit the code above to ask 10 questions:
-
+ 
 Customize question one to ask "Which is my favorite country to travel to, with the answer choices: Germany, France, Italy, Sweden, Norway and have the correct answer be Germany
-
+            
 implement the corrected question 1 into the original code
-
+            
 Have question 2 ask where I was born and have the answer choices be Houston, Tx Allentown, PA Baltimore, MD and The Woodlands, TX. Have the correct answer be Allentown but say that I have lived in all these places 
-
+            
 Add update question one and two to the original html code for 10 questions
-
+            
 Question 3 should ask what my favorite color is: Turquoise, Orange, Gold, or Rainbow. The correct answer is Turquoise. Question 4 should ask what sport I played growing up: golf, volleyball, gymnastics, tennis. The correct answer is tennis. Question 5 should ask what my favorite Aggie tradition is: Muster, Midnight Yell, Ring Day, Football Games. The correct answer is Muster. Question 6 should ask what my dream car is: Porsche 911, McLaren, Tesla, Aston Martin. Correct answer is Porsche 911. Question 7 should ask where I want to live when I'm older: Munich, Paris, Tuscany, and New York City. Correct Answer is Munich. Question 8 should ask what my favorite TV Show is: Grey's Anatomy, The Vampire Diaries, Peaky Blinders, Criminal Minds. Correct answer is The Vampire Diaries. Question 9 should ask how many Languages I can speak: 1, 2, 3, 4. Correct answer is 2 (English & Hindi) but hoping to learn Spanish, French, Telugu, and German. Finally, question 10 should ask what my middle name is: Kiara, Evelyn, Priya, or I don't have one. Correct answer is I dont have one.
+            
+display selected answers and correct answers for each question after quiz is complete
+            
 Add that the webpage was created by ChatGPT.
-
+            
 have the question text be maroon, the answer choices in grey, and the selected answer in black
+            
+display selected answers and correct answers for each question after quiz is complete
         </textarea>
     </div>
 
@@ -98,6 +106,16 @@ have the question text be maroon, the answer choices in grey, and the selected a
     <script>
         const questions = [
             {
+                question: "Which is my favorite country to travel to?",
+                options: ["France", "Germany", "Italy", "Sweden", "Norway"],
+                answer: "Germany"
+            },
+            {
+                question: "Where was I born?",
+                options: ["Houston, TX", "Allentown, PA", "Baltimore, MD", "The Woodlands, TX"],
+                answer: "Allentown, PA (I have lived in all these places)"
+            },
+            {
                 question: "What's my favorite color?",
                 options: ["Turquoise", "Orange", "Gold", "Rainbow"],
                 answer: "Turquoise"
@@ -109,17 +127,17 @@ have the question text be maroon, the answer choices in grey, and the selected a
             },
             {
                 question: "What's my favorite Aggie tradition?",
-                options: ["Muster", "Midnight Yell", "Ring Day", "Football Games"],
+                options: ["Midnight Yell", "Muster", "Ring Day", "Football Games"],
                 answer: "Muster"
             },
             {
                 question: "What's my dream car?",
-                options: ["Porsche 911", "McLaren", "Tesla", "Aston Martin"],
+                options: ["McLaren", "Tesla", "Porsche 911", "Aston Martin"],
                 answer: "Porsche 911"
             },
             {
                 question: "Where do I want to live when I'm older?",
-                options: ["Munich", "Paris", "Tuscany", "New York City"],
+                options: ["Paris", "Tuscany", "Munich", "New York City"],
                 answer: "Munich"
             },
             {
@@ -135,12 +153,13 @@ have the question text be maroon, the answer choices in grey, and the selected a
             {
                 question: "What's my middle name?",
                 options: ["Kiara", "Evelyn", "Priya", "I don't have one"],
-                answer: "I don't have one"
+                answer: "I don't have one" 
             }
         ];
 
         let currentQuestion = 0;
         let score = 0;
+        let selectedAnswers = []; // To store selected answers
 
         const questionElement = document.getElementById("question");
         const optionsElement = document.getElementById("options");
@@ -164,6 +183,7 @@ have the question text be maroon, the answer choices in grey, and the selected a
         }
 
         function checkAnswer(selectedOption) {
+            selectedAnswers[currentQuestion] = selectedOption;
             if (selectedOption === questions[currentQuestion].answer) {
                 score++;
             }
@@ -174,7 +194,14 @@ have the question text be maroon, the answer choices in grey, and the selected a
         function showResult() {
             questionElement.textContent = "";
             optionsElement.innerHTML = "";
-            resultElement.textContent = `You got ${score} out of ${questions.length} questions correct!`;
+            resultElement.innerHTML = `<p>Your Results:</p>`;
+            for (let i = 0; i < questions.length; i++) {
+                const selected = selectedAnswers[i] || "No answer selected";
+                const correct = questions[i].answer;
+                const result = selected === correct ? 'correct' : 'incorrect';
+                resultElement.innerHTML += `<p>Question ${i + 1}: Your answer: <span class="${result === 'correct' ? 'correct' : 'incorrect'}">${selected}</span> <br> (Correct answer: <span class="correct">${correct}</span>)</p>`;
+            }
+            resultElement.innerHTML += `<p>Total Score: ${score} out of ${questions.length}</p>`;
         }
 
         displayQuestion();
