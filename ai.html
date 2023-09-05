@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz About Me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: maroon; /* Question text color */
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .option {
+            font-size: 16px;
+            margin: 5px;
+            color: grey; /* Answer choices text color */
+            cursor: pointer;
+        }
+        .option:hover {
+            background-color: #ddd; /* Highlight on hover */
+        }
+        .selected {
+            color: black; /* Selected answer text color */
+            font-weight: bold; /* Make selected answer bold */
+        }
+        .result {
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        /* Room styling */
+        .room {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .room label {
+            font-weight: bold;
+        }
+        .room textarea {
+            width: 300px;
+            height: 150px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Room with ChatGPT Prompt -->
+    <div class="room">
+        <label>ChatGPT Prompt</label>
+        <textarea readonly>
+Add room in the webpage (on the top right) with a textbox containing the prompt I provided you to create this page (this prompt included) to display with the quiz. Bold the border and caption it "ChatGPT Prompt".
+
+
+create and write html code for a webpage that displays an interactive quiz on facts about me
+
+edit the code above to ask 10 questions:
+
+Customize question one to ask "Which is my favorite country to travel to, with the answer choices: Germany, France, Italy, Sweden, Norway and have the correct answer be Germany
+
+implement the corrected question 1 into the original code
+
+Have question 2 ask where I was born and have the answer choices be Houston, Tx Allentown, PA Baltimore, MD and The Woodlands, TX. Have the correct answer be Allentown but say that I have lived in all these places 
+
+Add update question one and two to the original html code for 10 questions
+
+Question 3 should ask what my favorite color is: Turquoise, Orange, Gold, or Rainbow. The correct answer is Turquoise. Question 4 should ask what sport I played growing up: golf, volleyball, gymnastics, tennis. The correct answer is tennis. Question 5 should ask what my favorite Aggie tradition is: Muster, Midnight Yell, Ring Day, Football Games. The correct answer is Muster. Question 6 should ask what my dream car is: Porsche 911, McLaren, Tesla, Aston Martin. Correct answer is Porsche 911. Question 7 should ask where I want to live when I'm older: Munich, Paris, Tuscany, and New York City. Correct Answer is Munich. Question 8 should ask what my favorite TV Show is: Grey's Anatomy, The Vampire Diaries, Peaky Blinders, Criminal Minds. Correct answer is The Vampire Diaries. Question 9 should ask how many Languages I can speak: 1, 2, 3, 4. Correct answer is 2 (English & Hindi) but hoping to learn Spanish, French, Telugu, and German. Finally, question 10 should ask what my middle name is: Kiara, Evelyn, Priya, or I don't have one. Correct answer is I dont have one.
+Add that the webpage was created by ChatGPT.
+
+have the question text be maroon, the answer choices in grey, and the selected answer in black
+        </textarea>
+    </div>
+
+    <div class="quiz-container">
+        <h1>Quiz About Me</h1>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What's my favorite color?",
+                options: ["Turquoise", "Orange", "Gold", "Rainbow"],
+                answer: "Turquoise"
+            },
+            {
+                question: "What sport did I play growing up?",
+                options: ["Golf", "Volleyball", "Gymnastics", "Tennis"],
+                answer: "Tennis"
+            },
+            {
+                question: "What's my favorite Aggie tradition?",
+                options: ["Muster", "Midnight Yell", "Ring Day", "Football Games"],
+                answer: "Muster"
+            },
+            {
+                question: "What's my dream car?",
+                options: ["Porsche 911", "McLaren", "Tesla", "Aston Martin"],
+                answer: "Porsche 911"
+            },
+            {
+                question: "Where do I want to live when I'm older?",
+                options: ["Munich", "Paris", "Tuscany", "New York City"],
+                answer: "Munich"
+            },
+            {
+                question: "What's my favorite TV Show?",
+                options: ["Grey's Anatomy", "The Vampire Diaries", "Peaky Blinders", "Criminal Minds"],
+                answer: "The Vampire Diaries"
+            },
+            {
+                question: "How many languages can I speak?",
+                options: ["1", "2", "3", "4"],
+                answer: "2 (English & Hindi)"
+            },
+            {
+                question: "What's my middle name?",
+                options: ["Kiara", "Evelyn", "Priya", "I don't have one"],
+                answer: "I don't have one"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        const resultElement = document.getElementById("result");
+
+        function displayQuestion() {
+            if (currentQuestion < questions.length) {
+                questionElement.textContent = questions[currentQuestion].question;
+                optionsElement.innerHTML = "";
+
+                questions[currentQuestion].options.forEach((option) => {
+                    const optionButton = document.createElement("button");
+                    optionButton.textContent = option;
+                    optionButton.classList.add("option");
+                    optionButton.addEventListener("click", () => checkAnswer(option));
+                    optionsElement.appendChild(optionButton);
+                });
+            } else {
+                showResult();
+            }
+        }
+
+        function checkAnswer(selectedOption) {
+            if (selectedOption === questions[currentQuestion].answer) {
+                score++;
+            }
+            currentQuestion++;
+            displayQuestion();
+        }
+
+        function showResult() {
+            questionElement.textContent = "";
+            optionsElement.innerHTML = "";
+            resultElement.textContent = `You got ${score} out of ${questions.length} questions correct!`;
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
